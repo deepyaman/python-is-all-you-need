@@ -22,9 +22,21 @@ def _():
 def _(mo):
     mo.md(
         r"""
-    ## Python is all you need: an overview of the composable, Python-native data stack
+    ## Python is all you need: an overview of the<br/>composable, Python-native data stack
 
-    Deepyaman Datta · Kedro Tech Design · June 25, 2025
+    Deepyaman Datta · SciPy 2025 · July 9, 2025
+    """
+    )
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(
+        r"""
+    ## Why should _you_ care?
+
+    ![](public/ai-hierarchy-of-needs.avif)
     """
     )
     return
