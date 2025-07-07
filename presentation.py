@@ -44,12 +44,6 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md(r"""# The modern data stack""")
-    return
-
-
-@app.cell
-def _(mo):
     mo.md(
         r"""
     ## Definition of the modern data stack
@@ -64,7 +58,7 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## A brief history of the modern data stack
+    ## [REMOVE SLIDE?] A brief history of the modern data stack
 
     * **2010–2014**: Google BigQuery, Amazon Redshift, and Snowflake launched
     * [Around the same time, core products of the would-be modern data stack were founded](https://www.getdbt.com/blog/future-of-the-modern-data-stack)
@@ -90,7 +84,7 @@ def _(mo):
         r"""
     ## ELT vs ETL
 
-    * ETL: transform before loading to warehouse
+    * ETL: transform before loading into the warehouse
     * ELT: load first, then transform inside the warehouse
 
     ![](public/etl-vs-elt.png)
@@ -118,18 +112,14 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md(r"""# And now, Python""")
-    return
-
-
-@app.cell
-def _(mo):
     mo.md(
         r"""
-    ## Where were we in all this?
+    ## What about Python?
 
-    * Python: exploding in popularity, but second-class in MDS
-    * Until now: Python-first data pipelines couldn't scale*
+    * Python now rivals SQL in developer popularity
+    * Second-class support in the modern data stack
+        * Still seen as the fallback option for complex cases
+    * Python-first data pipelines couldn't scale*
 
     ![](public/top-programming-languages.png)
     """
@@ -148,65 +138,15 @@ def _(mo):
         * Pythonic dataframe API
         * Interfaces to 20+ query languages
         * Deferred execution model
-    """
-    )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-    ## [SKIP] Slide 3: Key Takeaways
-
-    * Python-native data engineering is here—and it's powerful
-    * You can build end-to-end pipelines with:
-
-      * Ibis (transforms)
-      * Kedro (orchestration)
-      * dlt (ingestion)
-      * Pandera (validation)
-    * Composability means flexibility and reuse
-    """
-    )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-    ## [SKIP] Slide 4: The Rise of the Modern Data Stack
-
-    * Born with cloud-native SQL tools: Redshift, BigQuery, Snowflake
-    * ELT workflows took over from ETL
-    * dbt popularized SQL transformations
-    * But: everything assumed SQL at the core
-    """
-    )
-    return
-
-
-@app.cell
-def _():
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(r""" """)
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-    ## [SKIP] Slide 6: So... What About Python?
-
-    * Python now rivals SQL in developer popularity
-    * But still seen as the “fallback” for complex cases
-    * Can we build **first-class** pipelines in Python?
+    * Enables language interoperability
+        * 
+          ```python
+          t.filter(t.a > 1).select("a", "b", "c")
+          ```
+          is equivalent to
+          ```sql
+          SELECT a, b, c FROM t WHERE a > 1
+          ```
     """
     )
     return
@@ -221,47 +161,6 @@ def _(mo):
     * Inspired by modular data system vision
     * Open standards, composability, and language flexibility
     * Key building block: **Ibis**
-    """
-    )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-    ## Slide 8: Composable Data Management (Visual)
-
-
-
-    * 5 logical layers
-    * Language frontends (like Python) plug into many engines
-    * Portable intermediate representation (IR)
-
-    ![](public/modular-data-stack.png)
-    """
-    )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-    ## Ibis = SQL Power + Python Syntax
-
-    ```python
-    t.filter(t.a > 1).select("a", "b", "c")
-    ```
-
-    Equivalent to:
-
-    ```sql
-    SELECT a, b, c FROM t WHERE a > 1
-    ```
-
-    * 20+ backends (BigQuery, DuckDB, Spark, Polars, etc.)
-    * Lazily builds IR, compiles to backend-native SQL
     """
     )
     return
