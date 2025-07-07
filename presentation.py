@@ -32,48 +32,93 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
-    ## Why should _you_ care?
-
-    ![](public/ai-hierarchy-of-needs.avif)
-    """
+    mo.vstack(
+        [
+            mo.md("## Why should _you_ care?"),
+            mo.image("public/ai-hierarchy-of-needs.avif", height=600),
+        ]
     )
     return
 
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
-    ## Definition of the modern data stack
+    # https://dadoverflow.com/2021/08/17/making-timelines-with-python/
+    from datetime import date
 
-    > [a set of products that a) redesigned the analytics workflow to take advantage of the cloud and b) all interacted with one another via SQL](https://roundup.getdbt.com/p/is-the-modern-data-stack-still-a)
-    """
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    labels, dates = zip(
+        *[
+            ("Chartio", date(2010, 6, 1)),
+            ("Looker", date(2011, 8, 1)),
+            ("Google BigQuery", date(2011, 11, 1)),
+            ("Periscope", date(2012, 1, 1)),
+            ("Amazon Redshift", date(2013, 2, 1)),
+            ("Fivetran", date(2013, 3, 1)),
+            ("Mode", date(2013, 10, 1)),
+            ("Snowflake", date(2014, 10, 1)),
+            ("Metabase", date(2014, 11, 1)),
+            ("Redash", date(2015, 12, 1)),
+            ("dbt", date(2016, 3, 1)),
+            ("Stitch", date(2016, 8, 1)),
+        ]
     )
-    return
 
+    min_date = date(np.min(dates).year - 1, np.min(dates).month, np.min(dates).day)
+    max_date = date(np.max(dates).year + 1, np.max(dates).month, np.max(dates).day)
 
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-    ## [REMOVE SLIDE?] A brief history of the modern data stack
+    fig, ax = plt.subplots(figsize=(15, 4), constrained_layout=True)
+    _ = ax.set_ylim(-2, 1.75)
+    _ = ax.set_xlim(min_date, max_date)
+    _ = ax.axhline(0, xmin=0.05, xmax=0.95, c="deeppink", zorder=1)
 
-    * **2010–2014**: Google BigQuery, Amazon Redshift, and Snowflake launched
-    * [Around the same time, core products of the would-be modern data stack were founded](https://www.getdbt.com/blog/future-of-the-modern-data-stack)
-        * **2010**: Chartio
-        * **2011**: Looker
-        * **2012**: Mode
-        * **2012**: Periscope
-        * **2012**: Fivetran
-        * **2014**: Metabase
-        * **2015**: Stitch
-        * **2015**: Redash
-        * **2016**: dbt
+    _ = ax.scatter(dates, np.zeros(len(dates)), s=120, c="palevioletred", zorder=2)
+    _ = ax.scatter(dates, np.zeros(len(dates)), s=30, c="darkmagenta", zorder=3)
 
-    ![](public/mds-funding.png)
-    """
+    label_offsets = np.zeros(len(dates))
+    label_offsets[::2] = 0.35
+    label_offsets[1::2] = -0.5
+    for i, (l, d) in enumerate(zip(labels, dates)):
+        _ = ax.text(
+            d,
+            label_offsets[i],
+            l,
+            ha="center",
+            fontfamily="serif",
+            fontweight=(
+                "bold"
+                if l in ["Google BigQuery", "Amazon Redshift", "Snowflake"]
+                else "normal"
+            ),
+            color="royalblue",
+            fontsize=12,
+        )
+
+    stems = np.zeros(len(dates))
+    stems[::2] = 0.3
+    stems[1::2] = -0.3
+    markerline, stemline, baseline = ax.stem(dates, stems)
+    _ = plt.setp(markerline, marker=",", color="darkmagenta")
+    _ = plt.setp(stemline, color="darkmagenta")
+
+    # hide lines around chart
+    for spine in ["left", "top", "right", "bottom"]:
+        _ = ax.spines[spine].set_visible(False)
+
+    # hide tick labels
+    _ = ax.set_yticks([])
+
+    mo.vstack(
+        [
+            mo.md(
+                """## What is the modern data stack?
+
+    > [a set of products that a) redesigned the analytics workflow to take advantage of the cloud and b) all interacted with one another via SQL](https://roundup.getdbt.com/p/is-the-modern-data-stack-still-a)"""
+            ),
+            ax,
+        ]
     )
     return
 
@@ -95,34 +140,34 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
-    ## [The modern data stack as we know it](https://www.linkedin.com/pulse/what-steps-tools-setting-up-modern-saas-based-bi-tristan-handy/) (circa 2016)
+    mo.vstack(
+        [
+            mo.md("""## [The modern data stack as we know it](https://www.linkedin.com/pulse/what-steps-tools-setting-up-modern-saas-based-bi-tristan-handy/) (circa 2016)
 
     * **Ingestion**: Fivetran, Stitch
     * **Storage**: Bigquery, Databricks, Redshift, Snowflake
     * **Transformation**: dbt
-    * **BI**: Looker, Mode, Periscope, Chartio, Metabase, Redash
-
-    ![](public/dbt-wau.png)
-    """
+    * **BI**: Looker, Mode, Periscope, Chartio, Metabase, Redash"""),
+            mo.image("public/dbt-wau.png", width=1200),
+        ]
     )
     return
 
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
-    ## What about Python?
+    mo.vstack(
+        [
+            mo.md(
+                """## What about Python?
 
     * Python now rivals SQL in developer popularity
     * Second-class support in the modern data stack
         * Still seen as the fallback option for complex cases
-    * Python-first data pipelines couldn't scale*
-
-    ![](public/top-programming-languages.png)
-    """
+    * Python-first data pipelines couldn't scale*"""
+            ),
+            mo.image("public/top-programming-languages.png"),  # TODO(deepyaman): Replace with https://altair-viz.github.io/gallery/bump_chart.html
+        ]
     )
     return
 
