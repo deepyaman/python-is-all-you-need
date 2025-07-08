@@ -34,7 +34,7 @@ def _(mo):
 def _(mo):
     mo.vstack(
         [
-            mo.md("## Why should _you_ care?"),
+            mo.md(r"## Why should _you_ care?"),
             mo.image("public/ai-hierarchy-of-needs.avif", height=600),
         ]
     )
@@ -113,9 +113,11 @@ def _(mo):
     mo.vstack(
         [
             mo.md(
-                """## What is the modern data stack?
+                r"""
+    ## What is the modern data stack?
 
-    > [a set of products that a) redesigned the analytics workflow to take advantage of the cloud and b) all interacted with one another via SQL](https://roundup.getdbt.com/p/is-the-modern-data-stack-still-a)"""
+    > [a set of products that a) redesigned the analytics workflow to take advantage of the cloud and b) all interacted with one another via SQL](https://roundup.getdbt.com/p/is-the-modern-data-stack-still-a)
+    """
             ),
             ax,
         ]
@@ -142,12 +144,16 @@ def _(mo):
 def _(mo):
     mo.vstack(
         [
-            mo.md("""## [The modern data stack as we know it](https://www.linkedin.com/pulse/what-steps-tools-setting-up-modern-saas-based-bi-tristan-handy/) (circa 2016)
+            mo.md(
+                r"""
+    ## [The modern data stack as we know it](https://www.linkedin.com/pulse/what-steps-tools-setting-up-modern-saas-based-bi-tristan-handy/) (circa 2016)
 
     * **Ingestion**: Fivetran, Stitch
     * **Storage**: Bigquery, Databricks, Redshift, Snowflake
     * **Transformation**: dbt
-    * **BI**: Looker, Mode, Periscope, Chartio, Metabase, Redash"""),
+    * **BI**: Looker, Mode, Periscope, Chartio, Metabase, Redash
+    """
+            ),
             mo.image("public/dbt-wau.png", width=1200),
         ]
     )
@@ -159,12 +165,14 @@ def _(mo):
     mo.vstack(
         [
             mo.md(
-                """## What about Python?
+                r"""
+    ## What about Python?
 
     * Python now rivals SQL in developer popularity
     * Second-class support in the modern data stack
         * Still seen as the fallback option for complex cases
-    * Python-first data pipelines couldn't scale*"""
+    * Python-first data pipelines couldn't scale*
+    """
             ),
             mo.image("public/top-programming-languages.png"),  # TODO(deepyaman): Replace with https://altair-viz.github.io/gallery/bump_chart.html
         ]
@@ -174,8 +182,10 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
+    mo.vstack(
+        [
+            mo.md(
+                r"""
     ## Enter the bird
 
     * **Ibis**: a lightweight Python library for data wrangling
@@ -184,15 +194,30 @@ def _(mo):
         * Interfaces to 20+ query languages
         * Deferred execution model
     * Enables language interoperability
-        * 
-          ```python
-          t.filter(t.a > 1).select("a", "b", "c")
-          ```
-          is equivalent to
-          ```sql
-          SELECT a, b, c FROM t WHERE a > 1
-          ```
     """
+            ),
+            mo.hstack(
+                [
+                    mo.md(
+                        r"""
+    ```python
+    t.filter(t.a > 1).select("a", "b", "c")
+    ```
+    """
+                    ),
+                    mo.md(r"$\equiv$"),
+                    mo.md(
+                        r"""
+    ```sql
+    SELECT a, b, c FROM t WHERE a > 1
+    ```
+    """
+                    ),
+                ],
+                justify="center",
+                align="center",
+            ),
+        ]
     )
     return
 
