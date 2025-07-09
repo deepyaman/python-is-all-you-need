@@ -377,7 +377,9 @@ def _(mo):
     * **pandera**: the open-source framework for validating Python dataframes
     * Supports:
         * pandas, Dask, Modin, PySpark, and now... Ibis!
+        * Built-in checks for common validation tasks
         * Custom checks in Ibis syntax
+        * Integrations with other tools in the Python ecosystem
     """
     )
     return
@@ -389,7 +391,27 @@ def _(mo):
         r"""
     ## pandera example
 
-    TODO(deepyaman)
+    ```python
+    def total_amount_positive(data: IbisData) -> ibis.Table:
+        w = ibis.window(group_by="order_id")
+        with_total_amount = data.table.mutate(total_amount=data.table.amount.sum().over(w))
+        return with_total_amount.order_by("order_id").select(_.total_amount >= 0)
+
+
+    schema = pa.DataFrameSchema(
+        columns={
+            "order_id": pa.Column(int),
+            "amount": pa.Column(float),
+            "status": pa.Column(
+                str,
+                pa.Check.isin(
+                    ["placed", "shipped", "completed", "returned", "return_pending"]
+                ),
+            ),
+        },
+        checks=[pa.Check(total_amount_positive)],
+    )
+    ```
     """
     )
     return
