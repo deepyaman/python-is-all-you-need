@@ -436,11 +436,11 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## Slide 17: Current Gaps & Limitations
+    ## Current gaps and limitations
 
     * Still new: some missing features (e.g. upserts in Ibis)
-    * Ecosystem coordination needed (esp. orchestration)
-    * Community integrations maturing (Kedro ↔ Pandera, Dagster)
+    * Community integrations maturing (Kedro-Pandera, orchestrators)
+    * Awareness
     """
     )
     return
@@ -450,11 +450,11 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## Slide 18: Why This Stack Works
+    ## Why this stack works
 
     * Built organically to solve real user problems
     * Unified Python tooling = lower context switching
-    * Composability = portability across engines
+    * Solid fundamentals: based on composable, open standards
     * Python is no longer the fallback—it's the foundation
     """
     )
@@ -465,25 +465,21 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## Slide 19: Where to Learn More
+    ## Where to learn more
 
-    * Kedro + Ibis Jaffle Shop demo: \[GitHub link]
-    * Ibis project: \[ibis-project.org]
-    * dlt docs: \[dlthub.com]
-    * Pandera docs: \[pandera.readthedocs.io]
-    """
-    )
-    return
+    **Let's build better data pipelines—in Python.**
 
-
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-    ## Slide 20: Thank You!
-
-    **Questions?**
-    Let’s build better data pipelines—in Python.
+    * Tools we talked about
+        * Ibis: https://ibis-project.org/
+        * Kedro: https://kedro.org/
+        * Pandera + Ibis: https://pandera.readthedocs.io/en/latest/ibis.html
+        * dlt: https://dlthub.com/docs/intro
+    * Putting it all together
+        * Jaffle Shop demo: https://github.com/deepyaman/jaffle-shop/tree/jaffle-stack
+        * Kedro + Ibis: https://kedro.org/blog/building-scalable-data-pipelines-with-kedro-and-ibis
+        * Kedro + Ibis tutorial: https://www.youtube.com/watch?v=ffDHdtz_vKc
+    * Dive deeper
+        * Does Ibis understand SQL? https://ibis-project.org/posts/does-ibis-understand-sql/
     """
     )
     return
