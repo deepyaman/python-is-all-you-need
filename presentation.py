@@ -155,7 +155,7 @@ def _(mo):
     """
             ),
             mo.image("public/dbt-wau.png", width=1200),
-        ]
+        ],
     )
     return
 
@@ -224,13 +224,40 @@ def _(mo):
 
 @app.cell
 def _(mo):
+    mo.vstack(
+        [
+            mo.md(
+                r"## [Fundamental components of any data stack](https://www.ibm.com/think/topics/modern-data-stack)"
+            ),
+            mo.hstack(
+                [
+                    mo.md(
+                        r"""
+    * Data storage
+    * Data ingestion
+    * Data transformation
+    * BI and analytics
+    * Data observability
+    """
+                    ),
+                    mo.image("public/data-engineering-lifecycle.png"),
+                ]
+            ),
+        ],
+        gap=2.25,
+    )
+    return
+
+
+@app.cell
+def _(mo):
     mo.md(
         r"""
-    ## Slide 7: Introducing the Python Analytics Stack
+    ## Data storage
 
-    * Inspired by modular data system vision
-    * Open standards, composability, and language flexibility
-    * Key building block: **Ibis**
+    * **Data warehouses**: Ibis supports most common data warehouse providers (e.g. Snowflake, Databricks, BigQuery) as backends
+    * **Data lakes**: Ibis supports Parquet, CSV, JSON, and more depending on the backend
+    * **Data lakehouses**: Ibis supports Delta; Iceberg supported by some backends
     """
     )
     return
@@ -240,14 +267,15 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## Slide 10: The Layers of the Python Stack
+    ## Data ingestion
 
-    * Data Storage: Lakehouse, DW, file formats
-    * Data Ingestion: dlt
-    * Transformation: Kedro + Ibis
-    * Validation: Pandera
-    * BI / Analytics: Streamlit, ML workflows
-    * Optional: Orchestration (Airflow, Dagster)
+    * **dlt**: open-source, Python-native EL (and Reverse ETL)
+    * Features:
+        * Loads data from [REST APIs](https://dlthub.com/docs/tutorial/rest-api), [SQL databases](https://dlthub.com/docs/tutorial/sql-database), [cloud storage](https://dlthub.com/docs/tutorial/filesystem), [Python data structures](https://dlthub.com/docs/tutorial/load-data-from-an-api), and [more](https://dlthub.com/docs/dlt-ecosystem/verified-sources)
+        * Supports a variety of [popular destinations](https://dlthub.com/docs/dlt-ecosystem/destinations/)
+        * Also supports [Reverse ETL](https://dlthub.com/blog/reverse-etl-dlt)
+        * Built-in [Ibis integration](https://dlthub.com/docs/general-usage/dataset-access/ibis-backend)
+    * Proven part of the modern data stack
     """
     )
     return
@@ -257,15 +285,51 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## Slide 11: Data Storage & Ingestion
+    ## dlt example
 
-    * Ibis supports Parquet, CSV, JSON, Delta, Iceberg, etc.
-    * dlt for ingestion:
+    ```python
+    import dlt
+    from dlt.sources.filesystem import filesystem, read_csv
 
-      * Python-native EL and reverse ETL
-      * Built-in Ibis integration
-      * Often used with dbt; works great with Kedro too
+    files = filesystem(bucket_url="gs://filesystem-tutorial", file_glob="encounters*.csv")
+    reader = (files | read_csv()).with_name("encounters")
+    pipeline = dlt.pipeline(
+        pipeline_name="hospital_data_pipeline",
+        dataset_name="hospital_data",
+        destination="duckdb",
+    )
+
+    info = pipeline.run(reader)
+    print(info)
+    ```
     """
+    )
+    return
+
+
+@app.cell
+def _(mo):
+    mo.hstack(
+        [
+            mo.md(
+                r"""
+    ## Data transformation
+
+    * **Kedro**: an open-source Python framework for building reproducible, maintainable, modular data pipelines
+    * Features:
+        * Nodes are vanilla Python functions
+        * [Native support for reading and writing Ibis tables using Kedro-Datasets](https://kedro.org/blog/building-scalable-data-pipelines-with-kedro-and-ibis)
+        * [Extensible by design](https://docs.kedro.org/en/0.19.14/extend_kedro/plugins.html)
+        * Graduate-stage project of the LF AI & Data Foundation
+    """
+            ),
+            mo.md(
+                r'> "When I learned about Kedro (while at dbt Labs), I commented that it was like dbt if it were created by Python data scientists instead of SQL data analysts (including both being created out of consulting companies)."'
+            ),
+        ],
+        align="center",
+        gap=2.25,
+        widths="equal",
     )
     return
 
@@ -274,38 +338,31 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## Slide 12: Transformation with Kedro + Ibis
+    ## From SQL (dbt) to Python (Kedro + Ibis)
 
-    * Kedro = modular Python pipeline framework (DAGs, catalogs)
-    * Our contribution: native Ibis support in Kedro datasets
-    * Model code as composable, reusable Python functions
-    """
-    )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-    ## Slide 13: From SQL (dbt) to Python (Kedro + Ibis)
-
-    **dbt example (Jinja):**
+    **SQL (using Jinja):**
 
     ```sql
-    {% for method in methods %}
-    SUM(...) as {{ method }}_amount,
+    {% set payment_methods = ['credit_card', 'coupon', 'bank_transfer', 'gift_card'] %}
+
+    ...
+
+    {% for payment_method in payment_methods %}
+    sum(...) as {{ payment_method }}_amount,
     {% endfor %}
     ```
 
-    **Python + Ibis:**
+    **Python (using Ibis):**
 
     ```python
-    for method in methods:
-        sum_exprs[f"{method}_amount"] = ...
+    payment_methods = ["credit_card", "coupon", "bank_transfer", "gift_card"]
+
+    ...
+
+    total_amount_by_payment_method = {}
+    for payment_method in payment_methods:
+        total_amount_by_payment_method[f"{payment_method}_amount"] = ...
     ```
-
-    * Cleaner, debuggable, IDE-friendly code
     """
     )
     return
@@ -315,13 +372,12 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## Slide 14: Visualizing the Query Plan
+    ## Data validation
 
-    !\[IR Visualization]
-
-    * Ibis constructs an intermediate representation (IR)
-    * Lazily compiled to backend-specific SQL
-    * Enables dev on DuckDB, prod on BigQuery/Snowflake
+    * **pandera**: the open-source framework for validating Python dataframes
+    * Supports:
+        * pandas, Dask, Modin, PySpark, and now... Ibis!
+        * Custom checks in Ibis syntax
     """
     )
     return
@@ -331,19 +387,9 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## Slide 15: Pandera for Data Validation
+    ## pandera example
 
-    * Originated for pandas; now supports Ibis
-    * Declarative validation: types, ranges, uniqueness, etc.
-
-    ```python
-    import pandera as pa
-
-    class Schema(pa.IbisSchemaModel):
-        column: pa.typing.Series[int] = pa.Field(ge=0)
-    ```
-
-    * Custom checks in Ibis syntax
+    TODO(deepyaman)
     """
     )
     return
@@ -353,11 +399,12 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## Slide 16: BI & Analytics in Python
+    ## BI and analytics
 
-    * Ibis outputs → Streamlit, Plotly, ML workflows
-    * Pandas compatibility where needed
-    * Great fit for teams doing analytics + modelin
+    * [Ibis supports the Streamlit `connection()` interface](https://ibis-project.org/how-to/visualization/streamlit)
+    * It can also be used with most other data visualization libraries
+        * pandas/Polars interoperability where needed
+    * Great fit for teams doing analytics and modeling
     """
     )
     return
