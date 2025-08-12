@@ -164,18 +164,24 @@ def _(mo):
 def _(mo):
     mo.vstack(
         [
-            mo.md(
-                r"""
-    ## What about Python?
-
+            mo.md(r"## What about Python?"),
+            mo.hstack(
+                [
+                    mo.md(
+                        r"""
     * Python now rivals SQL in developer popularity
     * Second-class support in the modern data stack
         * Still seen as the fallback option for complex cases
     * Python-first data pipelines couldn't scale*
     """
+                    ),
+                    mo.image("public/top-programming-languages.png", width=450),  # TODO(deepyaman): Replace with https://altair-viz.github.io/gallery/bump_chart.html
+                ],
+                gap=2.25,
+                widths="equal",
             ),
-            mo.image("public/top-programming-languages.png"),  # TODO(deepyaman): Replace with https://altair-viz.github.io/gallery/bump_chart.html
-        ]
+        ],
+        gap=2.25,
     )
     return
 
@@ -439,7 +445,7 @@ def _(mo):
     ## Current gaps and limitations
 
     * Still new: some missing features (e.g. upserts in Ibis)
-    * Community integrations maturing (Kedro-Pandera, orchestrators)
+    * Community integrations maturing (Kedro-Pandera, orchestrators, OpenLineage)
     * Awareness
     """
     )
