@@ -1,15 +1,10 @@
 import marimo
 
-__generated_with = "0.14.7"
+__generated_with = "0.14.17"
 app = marimo.App(
     width="medium",
     layout_file="layouts/presentation.slides.json",
 )
-
-
-@app.cell
-def _():
-    return
 
 
 @app.cell
@@ -35,7 +30,11 @@ def _(mo):
     mo.vstack(
         [
             mo.md(r"## Why should _you_ care?"),
-            mo.image("public/ai-hierarchy-of-needs.avif", height=600),
+            mo.image(
+                "public/ai-hierarchy-of-needs.avif",
+                height=600,
+                caption='Source: <a href="https://hackernoon.com/the-ai-hierarchy-of-needs-18f111fcc007">The AI Hierarchy of Needs (Rogati, 2017)</a>',
+            ),
         ]
     )
     return
@@ -127,15 +126,21 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md(
-        r"""
+    mo.vstack(
+        [
+            mo.md(
+                r"""
     ## ELT vs ETL
 
     * ETL: transform before loading into the warehouse
     * ELT: load first, then transform inside the warehouse
-
-    ![](public/etl-vs-elt.png)
     """
+            ),
+            mo.image(
+                "public/etl-vs-elt.png",
+                caption='Source: <a href="https://www.fivetran.com/blog/etl-vs-elt">ETL vs. ELT (Wang, 2022)</a>',
+            ),
+        ]
     )
     return
 
@@ -154,7 +159,11 @@ def _(mo):
     * **BI**: Looker, Mode, Periscope, Chartio, Metabase, Redash
     """
             ),
-            mo.image("public/dbt-wau.png", width=1200),
+            mo.image(
+                "public/dbt-wau.png",
+                width=1200,
+                caption='Source: <a href="https://www.getdbt.com/blog/next-layer-of-the-modern-data-stack">The next layer of the modern data stack (Handy, 2024)</a>',
+            ),
         ],
     )
     return
@@ -175,7 +184,12 @@ def _(mo):
     * Python-first data pipelines couldn't scale*
     """
                     ),
-                    mo.image("public/top-programming-languages.png", width=450),  # TODO(deepyaman): Replace with https://altair-viz.github.io/gallery/bump_chart.html
+                    # TODO(deepyaman): Replace with https://altair-viz.github.io/gallery/bump_chart.html
+                    mo.image(
+                        "public/top-programming-languages.png",
+                        width=450,
+                        caption='Source: <a href="https://github.blog/news-insights/octoverse/octoverse-2024/">Octoverse (GitHub Staff, 2024)</a>',
+                    ),
                 ],
                 gap=2.25,
                 widths="equal",
@@ -246,7 +260,10 @@ def _(mo):
     * Data observability
     """
                     ),
-                    mo.image("public/data-engineering-lifecycle.png"),
+                    mo.image(
+                        "public/data-engineering-lifecycle.png",
+                        caption='Source: <a href="https://www.oreilly.com/library/view/fundamentals-of-data/9781098108298/ch02.html#components_and_undercurrents_of_the_dat">Fundamentals of Data Engineering (Reis and Housley, 2022)</a>',
+                    ),
                 ]
             ),
         ],
