@@ -347,7 +347,11 @@ def _(mo):
     """
             ),
             mo.md(
-                r'> "When I learned about Kedro (while at dbt Labs), I commented that it was like dbt if it were created by Python data scientists instead of SQL data analysts (including both being created out of consulting companies)."'
+                r"""
+    > "When I learned about Kedro (while at dbt Labs), I commented that it was like dbt if it were created by Python data scientists instead of SQL data analysts (including both being created out of consulting companies)."
+
+    <div style="font-size: 0.75em; text-align: right;">— Cody Peterson, Product Manager @ Ascend.io</div>
+    """
             ),
         ],
         align="center",
