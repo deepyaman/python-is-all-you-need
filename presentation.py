@@ -462,7 +462,7 @@ def _(mo):
     ## Current gaps and limitations
 
     * Still new: some missing features (e.g. upserts in Ibis)
-    * Community integrations maturing (Kedro-Pandera, orchestrators, OpenLineage)
+    * Community integrations maturing (Kedro-pandera, orchestrators, OpenLineage)
     * Awareness
     """
     )
@@ -495,7 +495,7 @@ def _(mo):
     * Tools we talked about
         * Ibis: https://ibis-project.org/
         * Kedro: https://kedro.org/
-        * Pandera + Ibis: https://pandera.readthedocs.io/en/latest/ibis.html
+        * pandera + Ibis: https://pandera.readthedocs.io/en/latest/ibis.html
         * dlt: https://dlthub.com/docs/intro
     * Putting it all together
         * Jaffle Shop demo: https://github.com/deepyaman/jaffle-shop/tree/jaffle-stack
