@@ -401,7 +401,7 @@ def _(mo):
         r"""
     ## Data validation
 
-    * **pandera**: the open-source framework for validating Python dataframes
+    * **Pandera**: the open-source framework for validating Python dataframes
     * Supports:
         * pandas, Dask, Modin, PySpark, and now... Ibis!
         * Built-in checks for common validation tasks
@@ -416,7 +416,7 @@ def _(mo):
 def _(mo):
     mo.md(
         r"""
-    ## pandera example
+    ## Pandera example
 
     ```python
     def total_amount_positive(data: IbisData) -> ibis.Table:
@@ -466,7 +466,7 @@ def _(mo):
     ## Current gaps and limitations
 
     * Still new: some missing features (e.g. upserts in Ibis)
-    * Community integrations maturing (Kedro-pandera, orchestrators, OpenLineage)
+    * Community integrations maturing (Kedro-Pandera, orchestrators, OpenLineage)
     * Awareness
     """
     )
@@ -499,7 +499,7 @@ def _(mo):
     * Tools we talked about
         * Ibis: https://ibis-project.org/
         * Kedro: https://kedro.org/
-        * pandera + Ibis: https://pandera.readthedocs.io/en/latest/ibis.html
+        * Pandera + Ibis: https://pandera.readthedocs.io/en/latest/ibis.html
         * dlt: https://dlthub.com/docs/intro
     * Putting it all together
         * Jaffle Shop demo: https://github.com/deepyaman/jaffle-shop/tree/jaffle-stack
