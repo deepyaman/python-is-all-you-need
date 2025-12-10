@@ -17,7 +17,7 @@ def _():
 def _(mo):
     mo.md(
         r"""
-    ## Python is all you need: an overview of the<br/>composable, Python-native data stack
+    ## Data engineering with Python the right way:<br/>composable, Python-native data stack
 
     Deepyaman Datta · PyData Boston 2025 · December 10, 2025
     """
