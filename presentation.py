@@ -19,7 +19,7 @@ def _(mo):
         r"""
     ## Python is all you need: an overview of the<br/>composable, Python-native data stack
 
-    Deepyaman Datta · SciPy 2025 · July 9, 2025
+    Deepyaman Datta · PyData Boston 2025 · December 10, 2025
     """
     )
     return
@@ -453,7 +453,45 @@ def _(mo):
     * [Ibis supports the Streamlit `connection()` interface](https://ibis-project.org/how-to/visualization/streamlit)
     * It can also be used with most other data visualization libraries
         * pandas/Polars interoperability where needed
+    * Developing integration with the Boring Semantic Layer
     * Great fit for teams doing analytics and modeling
+    """
+    )
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(
+        r"""
+    ## Kedro Semantic Layer example
+
+    ```yaml
+    orders:
+      type: ibis.TableDataset
+      table_name: orders
+      connection: ${_duckdb}
+      save_args:
+        materialized: table
+      metadata:
+        kedro-semantic-layer:
+          description: "Order fact table. This table is at the order grain with one row per order."
+
+          dimensions:
+            order_date:
+              expr: _.order_date
+              is_event_timestamp: True
+              smallest_time_grain: "day"
+            status: _.status
+
+          measures:
+            order_total:
+              expr: _.amount.sum()
+              description: "Sum of total order amount."
+            order_count:
+              expr: _.count()
+              description: "Count of orders."
+    ```
     """
     )
     return
@@ -467,6 +505,7 @@ def _(mo):
 
     * Still new: some missing features (e.g. upserts in Ibis)
     * Community integrations maturing (Kedro-Pandera, orchestrators, OpenLineage)
+    * Real-world examples
     * Awareness
     """
     )
@@ -501,10 +540,12 @@ def _(mo):
         * Kedro: https://kedro.org/
         * Pandera + Ibis: https://pandera.readthedocs.io/en/latest/ibis.html
         * dlt: https://dlthub.com/docs/intro
+        * Boring Semantic Layer: https://boringdata.github.io/boring-semantic-layer/
     * Putting it all together
         * Jaffle Shop demo: https://github.com/deepyaman/jaffle-shop/tree/jaffle-stack
         * Kedro + Ibis: https://kedro.org/blog/building-scalable-data-pipelines-with-kedro-and-ibis
         * Kedro + Ibis tutorial: https://www.youtube.com/watch?v=ffDHdtz_vKc
+        * Kedro + Boring Semantic Layer: https://github.com/deepyaman/kedro-semantic-layer
     * Dive deeper
         * Does Ibis understand SQL? https://ibis-project.org/posts/does-ibis-understand-sql/
     """
